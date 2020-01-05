@@ -28,8 +28,9 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
     private static final String WECHAT_BETTER_LUCK_EN = "Better luck next time!";
     private static final String WECHAT_BETTER_LUCK_CH = "手慢了";
     private static final String WECHAT_EXPIRES_CH = "已超过24小时";
+    // TODO: 此处"查看红包"已改为"已领取"，是否有影响？
     private static final String WECHAT_VIEW_SELF_CH = "查看红包";
-    private static final String WECHAT_VIEW_OTHERS_CH = "领取红包";
+    private static final String WECHAT_VIEW_OTHERS_CH = "微信红包";
     private static final String WECHAT_NOTIFICATION_TIP = "[微信红包]";
     private static final String WECHAT_LUCKMONEY_RECEIVE_ACTIVITY = ".plugin.luckymoney.ui";//com.tencent.mm/.plugin.luckymoney.ui.En_fba4b94f  com.tencent.mm/com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyReceiveUI
     private static final String WECHAT_LUCKMONEY_DETAIL_ACTIVITY = "LuckyMoneyDetailUI";
