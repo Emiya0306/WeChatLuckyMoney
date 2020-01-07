@@ -1,7 +1,10 @@
 package xyz.monkeytong.hongbao.utils;
 
 import android.graphics.Rect;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+
+import java.util.Arrays;
 
 /**
  * Created by Zhongyi on 1/21/16.
@@ -9,12 +12,30 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class HongbaoSignature {
     public String sender, content, time, contentDescription = "", commentString;
     public boolean others;
+    private static final String WECHAT_PACKAGE_NAME = "com.tencent.mm";
+    private static final String WECHAT_LAYOUT = "android.widget.LinearLayout";
 
-    public boolean generateSignature(AccessibilityNodeInfo node, String excludeWords) {
+    private static final String WEWORK_PACKAGE_NAME = "com.tencent.wework";
+    private static final String WEWORK_LAYOUT = "android.widget.RelativeLayout";
+
+    private String getLayout(AccessibilityEvent event) {
+        String packageName = event.getPackageName().toString();
+
+        if (packageName.equals(WECHAT_PACKAGE_NAME)) {
+            return WECHAT_LAYOUT;
+        } else if (packageName.equals(WEWORK_PACKAGE_NAME)) {
+            return WEWORK_LAYOUT;
+        } else {
+            return "";
+        }
+    }
+
+    public boolean generateSignature(AccessibilityNodeInfo node, AccessibilityEvent event, String excludeWords) {
         try {
             /* The hongbao container node. It should be a LinearLayout. By specifying that, we can avoid text messages. */
             AccessibilityNodeInfo hongbaoNode = node.getParent();
-            if (!"android.widget.LinearLayout".equals(hongbaoNode.getClassName())) return false;
+            String layoutWords = getLayout(event);
+            if (!layoutWords.equals(hongbaoNode.getClassName())) return false;
 
             /* The text in the hongbao. Should mean something. */
             String hongbaoContent = hongbaoNode.getChild(0).getText().toString();
